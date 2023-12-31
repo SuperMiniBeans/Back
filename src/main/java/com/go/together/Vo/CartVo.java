@@ -20,7 +20,7 @@ public class CartVo {
     private int cartCount;
     private Double discountRate; // 추가: 할인율
     private Double discountPrice; // 추가: 할인가
-    private Double totalDiscountPrice; // 추가: 할인가
+    private Double discountTotalPrice; // 추가: 할인가
     private List<String> productSizes;
     private List<String> productColors;
     private String productName;
@@ -30,6 +30,7 @@ public class CartVo {
     private Double productPrice;
     private Double totalPrice;
     private Double totalCount;
+    private Double totalCartPrice;
     private String fileName;
     private String fileUploadPath;
     private String fileUuid;

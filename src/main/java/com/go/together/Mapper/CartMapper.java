@@ -2,6 +2,7 @@ package com.go.together.Mapper;
 
 import com.go.together.Vo.CartVo;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -16,7 +17,14 @@ public interface CartMapper {
 
 
 
+//    public List<CartVo> selectOrderCart(@Param("cartNumber") Long cartNumber, @Param("userNumber") Integer userNumber);
+
+
+
     public List<CartVo> selectOrderCart(Long cartNumber);
+
+
+
 
 //    유저넘버에 해당하는 모든 카트의 가격 값 합한거 조회
     public CartVo cartUserNumberTotalPrice(Integer userNumber);
