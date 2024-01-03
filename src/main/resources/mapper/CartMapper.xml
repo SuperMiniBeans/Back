@@ -146,6 +146,27 @@
 </select>
 
 
+    <select id="cartNumberTotalPrice">
+        SELECT USER_NUMBER,
+        SUM(TOTAL_PRICE) AS TOTAL_PRICE,
+        SUM(TOTAL_DISCOUNT_PRICE) AS DISCOUNT_TOTAL_PRICE
+        FROM (
+        <foreach collection="cartNumbers" item="cartNumber" separator="UNION ALL" open="" close="">
+            SELECT U.USER_NUMBER,
+            P.DISCOUNT_RATE,
+            SUM(P.PRODUCT_PRICE * C.CART_COUNT) AS TOTAL_PRICE,
+            SUM(P.PRODUCT_PRICE * (1 - (P.DISCOUNT_RATE/100)) * C.CART_COUNT) AS TOTAL_DISCOUNT_PRICE
+            FROM TBL_USER U
+            JOIN TBL_CART C ON U.USER_NUMBER = C.USER_NUMBER
+            JOIN TBL_PRODUCT P ON P.PRODUCT_NUMBER = C.PRODUCT_NUMBER
+            WHERE C.CART_NUMBER = #{cartNumber}
+            GROUP BY U.USER_NUMBER, P.DISCOUNT_RATE, C.CART_COUNT, C.CART_NUMBER
+        </foreach>
+        ) SUBQUERY
+        GROUP BY USER_NUMBER
+    </select>
+
+
     <!--    장바구니 상품 삭제-->
     <delete id="deleteCart">
         DELETE

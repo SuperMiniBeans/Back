@@ -144,7 +144,6 @@ public class CartController {
 
         List<CartVo> result = new ArrayList<>();
 
-
         for (Long cartNumber : cartNumbers) {
             List<CartVo> cartItems = cartService.pickCartAll(cartNumber);
             result.addAll(cartItems); // Add all items for the current cartNumber to the result list
@@ -153,4 +152,20 @@ public class CartController {
         System.out.println(result + "뽑은 장바구니 결과값 !!!!");
         return result;
     }
+
+
+
+    @PostMapping("/allCartPrice")
+    public  CartVo allCartPrice(@RequestBody Map<String, List<Long>> ArrayCartNumber){
+        List<Long> cartNumbers = ArrayCartNumber.get("cartNumber");
+
+        CartVo result = cartMapper.cartNumberTotalPrice(cartNumbers);
+
+        System.out.println(result + "뽑은 장바구니 결과값 !!!!");
+        return result;
+    }
+
+
+
+
 }

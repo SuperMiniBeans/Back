@@ -29,6 +29,9 @@ public interface CartMapper {
 //    유저넘버에 해당하는 모든 카트의 가격 값 합한거 조회
     public CartVo cartUserNumberTotalPrice(Integer userNumber);
 
+
+    public CartVo  cartNumberTotalPrice(List<Long> cartNumbers);
+
     //    장바구니 수량 증가
     public int addCart(Long cartNumber);
 
