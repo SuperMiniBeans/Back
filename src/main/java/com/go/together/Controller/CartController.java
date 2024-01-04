@@ -165,6 +165,30 @@ public class CartController {
         return result;
     }
 
+//결제하기 성공하면 이 컨트롤러 타기 - >
+    @PostMapping("/afterPay")
+    public int afterPay(@RequestBody Map<String, List<Long>> arrayCartNumber) {
+        List<Long> cartNumbers = arrayCartNumber.get("cartNumber");
+
+        int result = 0;
+
+        for (Long cartNumber : cartNumbers) {
+            result = cartMapper.condition(cartNumber);
+        }
+
+        System.out.println(result + "성공시 1");
+        return result;
+    }
+
+//    결제상품 리스트
+    @PostMapping("/afterPayList")
+    public List<CartVo> afterPayList(@RequestBody CartVo cartVo) {
+
+        Integer userNumber=cartVo.getUserNumber();
+
+        List<CartVo> result = cartService.payList(userNumber);
+        return result;
+    }
 
 
 

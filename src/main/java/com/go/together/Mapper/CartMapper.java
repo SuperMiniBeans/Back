@@ -16,6 +16,9 @@ public interface CartMapper {
     public List<CartVo> userCartList(Integer userNumber);
 
 
+    public List<CartVo> conditionList(Integer userNumber);
+
+
 
 //    public List<CartVo> selectOrderCart(@Param("cartNumber") Long cartNumber, @Param("userNumber") Integer userNumber);
 
@@ -23,7 +26,7 @@ public interface CartMapper {
 
     public List<CartVo> selectOrderCart(Long cartNumber);
 
-
+    public int condition(Long cartNumber);
 
 
 //    유저넘버에 해당하는 모든 카트의 가격 값 합한거 조회

@@ -18,6 +18,7 @@ public class CartVo {
     private String userId;
     private long productNumber;
     private int cartCount;
+    private int orderCondition;
     private Double discountRate; // 추가: 할인율
     private Double discountPrice; // 추가: 할인가
     private Double discountTotalPrice; // 추가: 할인가

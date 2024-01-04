@@ -43,8 +43,16 @@ public class CartService {
         return cartMapper.userCartList(userNumber);
     }
 
+    public List<CartVo> payList(Integer userNumber){
+        if(userNumber== null){
+            throw new IllegalArgumentException("사용자 번호가없어요!");
+        }
+        return cartMapper.conditionList(userNumber);
+    }
 
-//    public List<CartVo> pickCartAll(Long cartNumber, Integer userNumber) {
+
+
+    //    public List<CartVo> pickCartAll(Long cartNumber, Integer userNumber) {
 //        if (cartNumber == null) {
 //            throw new IllegalArgumentException("카트 번호가 없어요!");
 //        }
