@@ -33,6 +33,24 @@ public class CartController {
         return result;
     }
 
+    @PostMapping("/immediatePayment")
+    public int immediatePayment(@RequestBody CartVo cartVo) {
+        // 주어진 cartVo를 수정하여 orderCondition을 설정
+        cartVo.setOrderCondition(3);
+
+        // 서비스 메소드에 수정된 cartVo를 전달
+        int result = cartService.registerCart(cartVo);
+        System.out.println(result + "장바구니 추가 결과값?");
+
+        return result;
+    }
+
+
+
+
+
+
+
     @PostMapping("/userCart")
     public List<CartVo> userCartList(@RequestBody CartVo cartvo) {
         Integer userNumber = cartvo.getUserNumber();
@@ -89,7 +107,7 @@ public class CartController {
             // 만약 deleteCart 메서드가 실패할 경우, 이후 반복문은 계속 진행됩니다.
         }
 
-        System.out.println(result + "@@@@@@@@@@@@@@@@결과값 ??????");
+        System.out.println(result + "장바구니 결과값 ??????");
 
         return result; // 마지막에 최종적으로 deleteCart 메서드의 결과 반환
     }
@@ -176,6 +194,8 @@ public class CartController {
             result = cartMapper.condition(cartNumber);
         }
 
+
+        System.out.println("afterPay 컨트롤러 타는지 @@@??????@@@@!!!");
         System.out.println(result + "성공시 1");
         return result;
     }
@@ -185,10 +205,22 @@ public class CartController {
     public List<CartVo> afterPayList(@RequestBody CartVo cartVo) {
 
         Integer userNumber=cartVo.getUserNumber();
+        System.out.println(userNumber+"유저넘버가 잘 나오는지?");
 
         List<CartVo> result = cartService.payList(userNumber);
         return result;
     }
+
+    @GetMapping("/afterPayList")
+    public List<CartVo> getAfterPayList(@RequestParam Integer userNumber) {
+
+        System.out.println(userNumber+"유저넘버가 잘 나오는지?");
+
+        List<CartVo> result = cartService.payList(userNumber);
+        return result;
+    }
+
+
 
 
 

@@ -8,8 +8,8 @@
         <selectKey keyProperty="cartNumber" order="BEFORE" resultType="int">
             SELECT SEQ_CART.NEXTVAL FROM DUAL
         </selectKey>
-        INSERT INTO TBL_CART(CART_NUMBER, PRODUCT_NUMBER, USER_NUMBER, CART_COUNT, SELECTED_SIZE, SELECTED_COLOR)
-        VALUES (#{cartNumber}, #{productNumber}, #{userNumber}, #{cartCount}, #{selectedSize}, #{selectedColor})
+        INSERT INTO TBL_CART(CART_NUMBER, PRODUCT_NUMBER, USER_NUMBER, CART_COUNT, SELECTED_SIZE, SELECTED_COLOR , ORDER_CONDITION)
+        VALUES (#{cartNumber}, #{productNumber}, #{userNumber}, #{cartCount}, #{selectedSize}, #{selectedColor} ,#{orderCondition})
     </insert>
 
 
