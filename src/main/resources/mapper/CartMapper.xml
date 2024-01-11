@@ -16,8 +16,57 @@
 
 
     <!--    장바구니 상품 조회-->
+<!--    <select id="userCartList" resultType="cartVo">-->
+<!--        SELECT C.CART_NUMBER, C.CART_COUNT, C.SELECTED_COLOR, C.SELECTED_SIZE,-->
+<!--               U.USER_NUMBER, U.USER_ID,-->
+<!--               P.PRODUCT_NUMBER, P.PRODUCT_NAME, P.PRODUCT_QUANTITY, P.PRODUCT_PRICE, P.DISCOUNT_RATE,-->
+<!--               LISTAGG(PS.PRODUCT_SIZES, ',') WITHIN GROUP (ORDER BY PS.PRODUCT_SIZES) AS PRODUCT_SIZES,-->
+<!--       LISTAGG(PC.PRODUCT_COLORS, ',') WITHIN GROUP (ORDER BY PC.PRODUCT_COLORS) AS PRODUCT_COLORS,-->
+<!--            (P.PRODUCT_PRICE * (1 - (P.DISCOUNT_RATE/100))) AS DISCOUNT_PRICE,-->
+<!--            C.CART_COUNT AS TOTAL_COUNT,-->
+<!--            (P.PRODUCT_PRICE * (1 - (P.DISCOUNT_RATE/100)))*C.CART_COUNT AS DISCOUNT_TOTAL_PRICE,-->
+<!--            P.PRODUCT_PRICE * C.CART_COUNT AS TOTAL_PRICE,-->
+<!--            F.FILE_NAME, F.FILE_UPLOAD_PATH, F.FILE_UUID-->
+<!--        FROM TBL_USER U-->
+<!--            JOIN TBL_CART C ON U.USER_NUMBER = C.USER_NUMBER-->
+<!--            JOIN TBL_PRODUCT P ON P.PRODUCT_NUMBER = C.PRODUCT_NUMBER-->
+<!--            JOIN (-->
+<!--            SELECT-->
+<!--            PRODUCT_NUMBER,-->
+<!--            LISTAGG(PRODUCT_SIZES, ',') WITHIN GROUP (ORDER BY PRODUCT_SIZES) AS PRODUCT_SIZES-->
+<!--            FROM  TBL_PRODUCT_SIZE-->
+<!--            GROUP BY PRODUCT_NUMBER-->
+<!--            ) PS ON P.PRODUCT_NUMBER = PS.PRODUCT_NUMBER-->
+<!--            JOIN (-->
+<!--            SELECT-->
+<!--            PRODUCT_NUMBER,-->
+<!--            LISTAGG(PRODUCT_COLORS, ',') WITHIN GROUP (ORDER BY PRODUCT_COLORS) AS PRODUCT_COLORS-->
+<!--            FROM-->
+<!--            TBL_PRODUCT_COLOR-->
+<!--            GROUP BY-->
+<!--            PRODUCT_NUMBER-->
+<!--            ) PC ON P.PRODUCT_NUMBER = PC.PRODUCT_NUMBER-->
+<!--            LEFT JOIN (-->
+<!--            SELECT FILE_NUMBER, FILE_UPLOAD_PATH, FILE_UUID, FILE_NAME, PRODUCT_NUMBER-->
+<!--            FROM (-->
+<!--            SELECT FILE_NUMBER, FILE_UPLOAD_PATH, FILE_UUID, FILE_NAME, PRODUCT_NUMBER,-->
+<!--            RANK() OVER (PARTITION BY PRODUCT_NUMBER ORDER BY FILE_NUMBER) RK-->
+<!--            FROM TBL_FILE-->
+<!--            ) T-->
+<!--            WHERE RK = 1-->
+<!--            ) F ON F.PRODUCT_NUMBER = P.PRODUCT_NUMBER-->
+<!--        WHERE C.USER_NUMBER = #{userNumber}-->
+<!--        GROUP BY-->
+<!--            C.CART_NUMBER, C.CART_COUNT, C.SELECTED_COLOR, C.SELECTED_SIZE,-->
+<!--            U.USER_NUMBER, U.USER_ID, U.USER_ADDRESS1, U.USER_ADDRESS2, U.USER_ADDRESS3, U.USER_PHONE_NUMBER,-->
+<!--            P.PRODUCT_NUMBER, P.PRODUCT_NAME, P.PRODUCT_QUANTITY, P.PRODUCT_PRICE, P.DISCOUNT_RATE,-->
+<!--            F.FILE_NAME, F.FILE_UPLOAD_PATH, F.FILE_UUID-->
+<!--    </select>-->
+
+
+
     <select id="userCartList" resultType="cartVo">
-        SELECT C.CART_NUMBER, C.CART_COUNT, C.SELECTED_COLOR, C.SELECTED_SIZE,
+        SELECT C.CART_NUMBER, C.CART_COUNT, C.SELECTED_COLOR, C.SELECTED_SIZE,C.ORDER_CONDITION,
                U.USER_NUMBER, U.USER_ID,
                P.PRODUCT_NUMBER, P.PRODUCT_NAME, P.PRODUCT_QUANTITY, P.PRODUCT_PRICE, P.DISCOUNT_RATE,
                LISTAGG(PS.PRODUCT_SIZES, ',') WITHIN GROUP (ORDER BY PS.PRODUCT_SIZES) AS PRODUCT_SIZES,
@@ -55,22 +104,13 @@
             ) T
             WHERE RK = 1
             ) F ON F.PRODUCT_NUMBER = P.PRODUCT_NUMBER
-        WHERE C.USER_NUMBER = #{userNumber}
+        WHERE C.USER_NUMBER = #{userNumber} AND C.ORDER_CONDITION=0
         GROUP BY
-            C.CART_NUMBER, C.CART_COUNT, C.SELECTED_COLOR, C.SELECTED_SIZE,
+            C.CART_NUMBER, C.CART_COUNT, C.SELECTED_COLOR, C.SELECTED_SIZE,C.ORDER_CONDITION,
             U.USER_NUMBER, U.USER_ID, U.USER_ADDRESS1, U.USER_ADDRESS2, U.USER_ADDRESS3, U.USER_PHONE_NUMBER,
             P.PRODUCT_NUMBER, P.PRODUCT_NAME, P.PRODUCT_QUANTITY, P.PRODUCT_PRICE, P.DISCOUNT_RATE,
             F.FILE_NAME, F.FILE_UPLOAD_PATH, F.FILE_UUID
     </select>
-
-
-
-<update id="condition">
-    UPDATE TBL_CART
-    SET ORDER_CONDITION = 1
-    WHERE CART_NUMBER=#{cartNumber}
-</update>
-
 
 
 
@@ -189,6 +229,13 @@
 
 
 
+
+
+    <update id="condition">
+        UPDATE TBL_CART
+        SET ORDER_CONDITION = 1
+        WHERE CART_NUMBER=#{cartNumber}
+    </update>
 
 
 
