@@ -36,6 +36,21 @@ public class CartService {
         return res;
     }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     public List<CartVo> userCartList(Integer userNumber){
         if(userNumber== null){
             throw new IllegalArgumentException("사용자 번호가없어요!");
@@ -63,6 +78,8 @@ public class CartService {
         if (cartNumber == null) {
             throw new IllegalArgumentException("카트 번호가 없어요!");
         }
+        cartMapper.orderConditionChange2(cartNumber);
+        
         return cartMapper.selectOrderCart(cartNumber);
     }
 //

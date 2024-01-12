@@ -15,6 +15,19 @@
 
 
 
+
+    <select id="orderCondition3">
+        SELECT CART_NUMBER
+        FROM TBL_CART
+        WHERE ORDER_CONDITION = 3
+    </select>
+
+
+    <update id="orderConditionChange2">
+        UPDATE TBL_CART
+        SET ORDER_CONDITION =2
+        WHERE CART_NUMBER=#{cartNumber}
+    </update>
     <!--    장바구니 상품 조회-->
 <!--    <select id="userCartList" resultType="cartVo">-->
 <!--        SELECT C.CART_NUMBER, C.CART_COUNT, C.SELECTED_COLOR, C.SELECTED_SIZE,-->

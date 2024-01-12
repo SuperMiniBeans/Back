@@ -35,19 +35,23 @@ public class CartController {
 
     @PostMapping("/immediatePayment")
     public int immediatePayment(@RequestBody CartVo cartVo) {
-        // 주어진 cartVo를 수정하여 orderCondition을 설정
         cartVo.setOrderCondition(3);
 
         // 서비스 메소드에 수정된 cartVo를 전달
         int result = cartService.registerCart(cartVo);
         System.out.println(result + "장바구니 추가 결과값?");
 
+
+        System.out.println(result +  " 결과값?");
         return result;
     }
 
-
-
-
+    @PostMapping("/getCartNumberIp")
+    public int getCartNumberIp(@RequestBody Map<String, Integer> requestBody) {
+        int orderCondition = requestBody.get("orderCondition");
+        int getCartNumber = cartMapper.orderCondition3(orderCondition);
+        return getCartNumber;
+    }
 
 
 
@@ -56,6 +60,7 @@ public class CartController {
         Integer userNumber = cartvo.getUserNumber();
 
         List<CartVo> userCartInfo = cartService.userCartList(userNumber);
+        System.out.println("@@@@@@userCart@@@@@");
         System.out.println(userCartInfo + " 결과값 ~@!@!@!@!@");
         return userCartInfo;
 
@@ -167,6 +172,7 @@ public class CartController {
             result.addAll(cartItems); // Add all items for the current cartNumber to the result list
         }
 
+        System.out.println("@@@@@@@pickCart @@@@@");
         System.out.println(result + "뽑은 장바구니 결과값 !!!!");
         return result;
     }
