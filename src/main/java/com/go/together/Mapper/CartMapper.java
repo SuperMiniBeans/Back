@@ -12,7 +12,9 @@ public interface CartMapper {
        // 장바구니 등록
     public int insertCart(CartVo cartVo);
 
-    public int orderCondition3(int orderCondition);
+    public List<Integer> orderCondition3(int orderCondition);
+
+
 
     public int orderConditionChange2(Long cartNumber);
 

@@ -11,6 +11,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -46,10 +47,16 @@ public class CartController {
         return result;
     }
 
-    @PostMapping("/getCartNumberIp")
-    public int getCartNumberIp(@RequestBody Map<String, Integer> requestBody) {
-        int orderCondition = requestBody.get("orderCondition");
-        int getCartNumber = cartMapper.orderCondition3(orderCondition);
+//    @PostMapping("/getCartNumberIp")
+//    public int getCartNumberIp(@RequestBody Map<String, Integer> requestBody) {
+//        int orderCondition = requestBody.get("orderCondition");
+//        int getCartNumber = cartMapper.orderCondition3(orderCondition);
+//        return getCartNumber;
+//    }
+ @PostMapping("/getCartNumberIp")
+    public List<Integer> getCartNumberIp(@RequestBody Map<String, Integer> requestBody) {
+     int  orderCondition= requestBody.get("orderCondition");
+     List<Integer> getCartNumber = cartMapper.orderCondition3(orderCondition);
         return getCartNumber;
     }
 
