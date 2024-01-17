@@ -25,6 +25,7 @@ public interface UserMapper {
     //유저 아이디 중복확인
     public int checkUserId(UserDto userDto);
 
+    public int update(UserDto userDto);
 
     //유저 정보 리스트로 모두 가져오기 . 마이페이지쪽 정보
     public UserDto userListAll(UserDto userDto);

@@ -57,19 +57,32 @@
 
 
 <!--수정 -->
+<!--    <update id="update">-->
+<!--        update TBL_USER-->
+<!--         SET-->
+<!--            USER_ID = #{userId},-->
+<!--            USER_NAME = #{userName},-->
+<!--            USER_EMAIL=#{userEmail},-->
+<!--            USER_ADDRESS1 = #{userAddress1},-->
+<!--            USER_ADDRESS2 = #{userAddress2},-->
+<!--            USER_ADDRESS3 = #{userAddress3},-->
+<!--            USER_PHONE_NUMBER = #{userPhoneNumber}-->
+<!--        where USER_NUMBER=#{userNumber}-->
+<!--    </update>-->
+
     <update id="update">
         update TBL_USER
-         SET
-            USER_NAME = #{userName},
-            USER_ID = #{userId},
-            USER_ADDRESS_NUMBER = #{userAddressNumber},
-            USER_ADDRESS1 = #{userAddress1},
-            USER_ADDRESS2 = #{userAddress2},
-            USER_ADDRESS3 = #{userAddress3},
-            USER_PHONE_NUMBER = #{userPhoneNumber}
+        <set>
+            <if test="userId != null">USER_ID = #{userId},</if>
+            <if test="userName != null">USER_NAME = #{userName},</if>
+            <if test="userEmail != null">USER_EMAIL = #{userEmail},</if>
+            <if test="userAddress1 != null">USER_ADDRESS1 = #{userAddress1},</if>
+            <if test="userAddress2 != null">USER_ADDRESS2 = #{userAddress2},</if>
+            <if test="userAddress3 != null">USER_ADDRESS3 = #{userAddress3},</if>
+            <if test="userPhoneNumber != null">USER_PHONE_NUMBER = #{userPhoneNumber},</if>
+        </set>
         where USER_NUMBER=#{userNumber}
     </update>
-
 
 
 <!-- 아이디 중복확인 -->

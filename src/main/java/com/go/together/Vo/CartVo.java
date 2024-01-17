@@ -5,6 +5,7 @@ import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
+import java.util.Date;
 import java.util.List;
 
 @Component
@@ -19,6 +20,8 @@ public class CartVo {
     private long productNumber;
     private int cartCount;
     private int orderCondition;
+    private Date cartDate;
+    private List<Integer> orderConditions;
     private Double discountRate; // 추가: 할인율
     private Double discountPrice; // 추가: 할인가
     private Double discountTotalPrice; // 추가: 할인가

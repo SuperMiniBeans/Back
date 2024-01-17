@@ -8,8 +8,8 @@
         <selectKey keyProperty="cartNumber" order="BEFORE" resultType="int">
             SELECT SEQ_CART.NEXTVAL FROM DUAL
         </selectKey>
-        INSERT INTO TBL_CART(CART_NUMBER, PRODUCT_NUMBER, USER_NUMBER, CART_COUNT, SELECTED_SIZE, SELECTED_COLOR , ORDER_CONDITION)
-        VALUES (#{cartNumber}, #{productNumber}, #{userNumber}, #{cartCount}, #{selectedSize}, #{selectedColor} ,#{orderCondition})
+        INSERT INTO TBL_CART(CART_NUMBER, PRODUCT_NUMBER, USER_NUMBER, CART_COUNT, SELECTED_SIZE, SELECTED_COLOR , ORDER_CONDITION,CART_DATE)
+        VALUES (#{cartNumber}, #{productNumber}, #{userNumber}, #{cartCount}, #{selectedSize}, #{selectedColor} ,#{orderCondition},SYSDATE)
     </insert>
 
 
@@ -79,7 +79,7 @@
 
 
     <select id="userCartList" resultType="cartVo">
-        SELECT C.CART_NUMBER, C.CART_COUNT, C.SELECTED_COLOR, C.SELECTED_SIZE,C.ORDER_CONDITION,
+        SELECT C.CART_NUMBER, C.CART_COUNT, C.SELECTED_COLOR, C.SELECTED_SIZE,C.ORDER_CONDITION,C.CART_DATE,
                U.USER_NUMBER, U.USER_ID,
                P.PRODUCT_NUMBER, P.PRODUCT_NAME, P.PRODUCT_QUANTITY, P.PRODUCT_PRICE, P.DISCOUNT_RATE,
                LISTAGG(PS.PRODUCT_SIZES, ',') WITHIN GROUP (ORDER BY PS.PRODUCT_SIZES) AS PRODUCT_SIZES,
@@ -119,7 +119,7 @@
             ) F ON F.PRODUCT_NUMBER = P.PRODUCT_NUMBER
         WHERE C.USER_NUMBER = #{userNumber} AND C.ORDER_CONDITION=0
         GROUP BY
-            C.CART_NUMBER, C.CART_COUNT, C.SELECTED_COLOR, C.SELECTED_SIZE,C.ORDER_CONDITION,
+            C.CART_NUMBER, C.CART_COUNT, C.SELECTED_COLOR, C.SELECTED_SIZE,C.ORDER_CONDITION,C.CART_DATE,
             U.USER_NUMBER, U.USER_ID, U.USER_ADDRESS1, U.USER_ADDRESS2, U.USER_ADDRESS3, U.USER_PHONE_NUMBER,
             P.PRODUCT_NUMBER, P.PRODUCT_NAME, P.PRODUCT_QUANTITY, P.PRODUCT_PRICE, P.DISCOUNT_RATE,
             F.FILE_NAME, F.FILE_UPLOAD_PATH, F.FILE_UUID
@@ -243,10 +243,10 @@
 
 
 
-
+<!--결제이후 컨디션 1-->
     <update id="condition">
         UPDATE TBL_CART
-        SET ORDER_CONDITION = 1
+        SET ORDER_CONDITION = 1 ,CART_DATE =SYSDATE
         WHERE CART_NUMBER=#{cartNumber}
     </update>
 
@@ -312,7 +312,7 @@
 
 
     <select id="conditionList" >
-        SELECT C.CART_NUMBER,C.SELECTED_COLOR, C.SELECTED_SIZE,
+        SELECT C.CART_NUMBER,C.SELECTED_COLOR, C.SELECTED_SIZE,C.CART_DATE,
                C.ORDER_CONDITION,
                U.USER_NUMBER,
                P.PRODUCT_NUMBER,
@@ -336,7 +336,7 @@
         WHERE U.USER_NUMBER = #{userNumber} AND C.ORDER_CONDITION = 1
         GROUP BY
             C.CART_NUMBER,C.SELECTED_COLOR, C.SELECTED_SIZE,
-            C.ORDER_CONDITION,
+            C.ORDER_CONDITION,C.CART_DATE,
             U.USER_NUMBER,
             P.PRODUCT_NUMBER,
             P.PRODUCT_NAME,

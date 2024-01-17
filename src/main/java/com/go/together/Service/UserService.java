@@ -121,6 +121,7 @@ public UserDto getUserList(UserDto userDto){
 
     public int checkEmail(UserDto userDto) {
         UserDto existingUser = userMapper.userListAll(userDto);
+        System.out.println(existingUser+" 회원정보 어떤거 가져오는지 ?");
         if (existingUser == null) {
             throw new IllegalArgumentException("해당하는 회원 정보가 없습니다.");
         }
@@ -152,6 +153,14 @@ public UserDto getUserList(UserDto userDto){
 
         return 100;
     }
+
+    public int modifyUserInfo(UserDto userDto)
+    {
+
+        return userMapper.update(userDto);
+    }
+
+
 
 }
 

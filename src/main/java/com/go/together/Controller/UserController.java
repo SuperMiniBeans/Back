@@ -86,6 +86,7 @@ public class UserController {
     @PostMapping("/verifyEmail")
     public int  verifyEmail(@RequestBody UserDto userDto){
         Integer userNumber = userDto.getUserNumber();
+        userDto.setUserNumber(userNumber);
         System.out.println(userNumber+"userNumber 나오는가 ? 받아오는거 맞겠지 ?");
         int res=userService.checkEmail(userDto);
 
@@ -149,6 +150,20 @@ public class UserController {
 
        UserDto res = userService.getUserList(userDto);
        return res; // UserDto를 반환
+   }
+
+
+
+
+
+   @PostMapping("/updateMyPage")
+    public int updateMyPage(@RequestBody UserDto userDto){
+        Integer userNumber=userDto.getUserNumber();
+
+       System.out.println(userNumber+ "유저넘버를 잘 가져오는지; ?");
+        int result=userService.modifyUserInfo(userDto);
+
+        return result;
    }
 
 
